@@ -1,0 +1,23 @@
+"0","api_query <- dbGetQuery(conn,
+                        statement = ""
+                        select 
+                          t.TrackId as Id
+                        , t.Name as TrackName
+                        , t.Composer as Composer
+                        , t.Milliseconds as Milliseconds
+                        , a.Title as AlbumTitle
+                        , g.Name as Genre
+                        from 
+                          tracks as t
+                        left join albums as a
+                          on a.AlbumId = t.AlbumId
+                        left join genres as g
+                          on g.GenreId = t.GenreId
+                        where 
+                        #t.TrackId=1
+                        #and
+                        g.Name = 'Rock'
+                        "")
+"
+"2","Error: near ""."": syntax error
+"

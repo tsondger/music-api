@@ -1,0 +1,111 @@
+---
+title: "EDA"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+
+knitr::opts_chunk$set(warning = F,
+                      message = F,
+                      echo = F)
+
+library(ggplot2)
+library(reader)
+library(ggthemes)
+library(knitr)
+library(rmarkdown)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(stringr)
+library(shiny)
+library(shinydashboard)
+library(dashboardthemes)
+library(shinyWidgets)
+library(forcats)
+library(readr)
+library(readxl)
+library(tibble)
+library(kableExtra)
+library(gt)
+
+library(DBI)
+library(RSQLite)
+
+```
+
+
+```{r}
+
+conn <- dbConnect(RSQLite::SQLite(), "chinook.db")
+
+tables <- DBI::dbListTables(conn) %>% 
+  as_tibble()
+
+# Tracks to album to genre
+
+tracks <- dbGetQuery(conn,
+                     statement = "select * from tracks limit 100")
+
+albums <- dbGetQuery(conn,
+                     statement = "select * from albums limit 100")
+
+genres <- dbGetQuery(conn,
+                     statement = "select * from genres limit 100")
+
+api_query <- dbGetQuery(conn,
+                        statement = "
+                        select 
+                          t.TrackId as Id
+                        , t.Name as TrackName
+                        , t.Composer as Composer
+                        , t.Milliseconds as Milliseconds
+                        , a.Title as AlbumTitle
+                        , g.Name as Genre
+                        from 
+                          tracks as t
+                        left join albums as a
+                          on a.AlbumId = t.AlbumId
+                        left join genres as g
+                          on g.GenreId = t.GenreId
+                        where 
+                        g.Name = 'Rock'
+                        ")
+
+unique_genres <- dbGetQuery(conn,
+                            statement = "select distinct Name from genres")
+#t.TrackId=1
+                        # and
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
